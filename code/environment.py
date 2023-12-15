@@ -31,8 +31,6 @@ class Node:
     def mark_path(self):
         self.is_path = True
         
-        
-       
     def mark_dirty(self):
         self.is_dirty = True
         
@@ -159,4 +157,3 @@ class Grid:
                 else:
                     grid[i][j] = ' '
         return '\n' + "Current State of Environment"+ '\n' + str(grid)
-  

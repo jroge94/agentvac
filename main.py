@@ -27,7 +27,3 @@ with open('states.txt', 'a') as f:
     f.write(str(grid.print_optimal_path()))
     
     f.close()
-    
-    
-
-    

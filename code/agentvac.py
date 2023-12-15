@@ -2,23 +2,30 @@ import heapdict
 from typing import Callable
 from code.environment import *
 
-
 def manhattan_distance(node: Node, grid: Grid) -> float:
     """
-    Manhattan using sum of all dirty nodes
+    Manhattan using sum of distances between all dirty nodes and the current node
     """
     return sum(abs(node.x - dirty_node.x) + abs(node.y - dirty_node.y) for dirty_node in grid.dirty_nodes)
     
 
+##TODO: add more heuristics functions
+##TODO: add a penalty for every dirty node left per step
 
 
+
+
+
+## This is currently lacking the following features:
+## - path cost
+## - penalty cost for leaving a dirty node
 def a_star_search(grid: Grid, heuristic: Callable[[Node, Grid], float]) -> tuple[set[Node], int, int, float]:
     
     
-    start_node = grid.nodes[4][0]
+    start_node = grid.nodes[4][0] ## this should be moved to a function in the grid class and used in the main function
     start_node.g = 0
     start_node.h = heuristic(start_node, grid)
-    start_node.f = start_node.g + start_node.h
+    start_node.f = start_node.g + start_node.h 
     
     open_list = heapdict.heapdict()
     open_list[start_node] = start_node.f
@@ -34,7 +41,7 @@ def a_star_search(grid: Grid, heuristic: Callable[[Node, Grid], float]) -> tuple
             f.write(str(grid))
             f.write('\n\n')
             
-            current_node.mark_visited()
+            current_node.mark_visited() ## this can be deleted
             
             if current_node.is_dirty:
                 grid.mark_clean(current_node.x, current_node.y)
