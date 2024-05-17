@@ -25,7 +25,7 @@ def a_star_search(grid: Grid, heuristic: Callable[[Node, Grid], float]) -> tuple
     start_node = grid.nodes[4][0] ## this should be moved to a function in the grid class and used in the main function
     start_node.g = 0
     start_node.h = heuristic(start_node, grid)
-         start_node.f = start_node.g + start_node.h
+    start_node.f = start_node.g + start_node.h
     
     open_list = heapdict.heapdict()
     open_list[start_node] = start_node.f
