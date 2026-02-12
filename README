@@ -1,72 +1,90 @@
 # Python AI Project: 5x5 Frontier Grid World Agent
 
-## Overview
+## 1. Overview
 
-- **Environment**: A 5 x 5 2D Frontier Grid World.
-- **Movement**: The agent can move up, down, left, or right.
-- **Sensing**: The agent detects if its current square is dirty and can clean it.
+This project implements an intelligent agent navigating a **5x5 Frontier Grid World**.
 
-## Assumptions
+* **Environment**: A discrete 5x5 2D grid.
+* **Movement**: The agent can move `UP`, `DOWN`, `LEFT`, or `RIGHT`.
+* **Sensing**: The agent detects if its current square is **dirty** and automatically cleans it.
 
-- The agent is aware of the grid layout and the locations of dirty squares.
-- The starting position of the agent is unknown to it.
+## 2. Assumptions
 
-## Initialization
+1. **Full Observability**: The agent knows the grid layout and the precise locations of all dirty squares.
+2. **Unknown Start**: The agent's specific starting coordinate is initially unknown to the logic (it must be provided or discovered at runtime).
 
-- Initialization involves setting up the grid world, defining the starting node, and providing a heuristic function.
+## 3. Initialization
 
-## Strategy
+Initialization involves three key steps:
 
-- **Algorithm Used**: A* Search Algorithm
+1. Setting up the `GridWorld` environment.
+2. Defining the **Starting Node**.
+3. Injecting the **Heuristic Function** logic.
 
-### Priority Queue
+---
 
-- A priority queue is used to determine the next node to expand.
-- **Priority Calculation**: f(n) = g(n) + h(n), where nodes with the lowest `f(n)` value are prioritized.
+## 4. Strategy: A* Search Algorithm
 
-### Cost Function
+The core intelligence is powered by the **A* Search Algorithm**.
 
-- `g(n)`: Represents the movement cost (1) and additional cleaning cost (1) if the agent cleans a dirty square.
+###  Priority Queue
 
-### Heuristic Function
+A min-priority queue determines the next node to expand to ensure optimality.
 
-- `h(n)`: The sum of distances to all remaining dirty squares.
+* **Priority Calculation**:
+
+
+
+*Nodes with the lowest  are expanded first.*
+
+### Cost Function ()
+
+The cost to reach a node includes movement and action costs:
+
+* **Movement**: +1 per step.
+* **Cleaning**: +1 if the agent cleans a dirty square.
+
+### Heuristic Function ()
+
+* **Logic**: The sum of Manhattan distances from the current position to **all remaining dirty squares**.
 
 ### Goal State
 
-- The goal is achieved when no dirty squares remain in the grid world.
+The search terminates successfully when **0 dirty squares** remain in the environment.
 
-## Frontier Grid World Details
+---
+
+## 5. Frontier Grid World Details
 
 ### Data Storage
 
-- The grid is represented as a 2D array of nodes.
-- Maintains a list of dirty nodes.
+* **Grid Representation**: A 2D array of `Node` objects.
+* **State Tracking**: Maintains a dynamic list/set of coordinates for **dirty nodes**.
 
 ### Key Checks
 
-- Determines if the goal state (no dirty nodes) is reached.
-- Ensures movements do not take the agent out of bounds.
-- Checks whether nodes are dirty or clean.
-- Identifies nodes that are part of the optimal path.
-- Identifies the starting node.
+* **Goal Test**: Is the dirty node list empty?
+* **Boundary Check**: Is the move within the [0, 4] index range?
+* **State Check**: Is the current node `Dirty` or `Clean`?
+* **Path ID**: Identifies nodes belonging to the final optimal path.
 
 ---
 
-## Key Functions
+## 6. Key Functions
 
-### A* Search
+### `a_star_search()`
 
-- Finds and returns the optimal path.
-- Counts and returns the number of nodes expanded.
-- Determines the number of nodes in the optimal path.
-- Calculates the total cost of the optimal path.
-- Cleans dirty nodes along the optimal path.
+* **Finds Optimal Path**: Returns the sequence of moves to clean the entire grid.
+* **Performance Metrics**:
+* Counts **nodes expanded**.
+* Counts **nodes in optimal path**.
+* Calculates **total path cost**.
 
-### Heuristic Function
 
-- Provides the heuristic value for a given node.
-- Counts and returns the number of dirty nodes remaining.
-- Calculates the distance from the current node to the nearest dirty node.
+* **Action**: Simulates cleaning of dirty nodes as the path is traversed.
 
----
+### `heuristic()`
+
+* **Calculates **: Computes the estimated cost to reach the goal state.
+* **Dirt Tracking**: Returns the count of remaining dirty nodes.
+* **Distance Logic**: Computes distance from `current_node` to the nearest dirty node (or sum of all, depending on implementation).
