@@ -101,6 +101,7 @@ def a_star_search(start: Node, goal: Node, grid: Grid, penalty_cost: int = 10):
         
         # 3. Print Current Node
         print(f"current_node -> {current.x}, {current.y} ->")
+        
 
         # 4. Clean if dirty (based on your log where 'D's disappear)
         if grid.is_dirty(current):
@@ -140,8 +141,6 @@ def a_star_search(start: Node, goal: Node, grid: Grid, penalty_cost: int = 10):
             
             tentative_g_score = g_score[current] + move_cost
             
-            # Build string for log: neighbor ->(x, y)->fvalue: val
-            # Note: Your log prints 'inf' if it hasn't been visited/calculated yet
             existing_f = f_score.get(neighbor, float('inf'))
             f_val_str = f"{existing_f}" if existing_f != float('inf') else "inf"
             neighbor_log_str += f"neighbor ->({neighbor.x}, {neighbor.y})->fvalue: {f_val_str}"
@@ -158,12 +157,15 @@ def a_star_search(start: Node, goal: Node, grid: Grid, penalty_cost: int = 10):
     return []
 
 if __name__ == "__main__":
+    
+    
 
     grid = Grid(5, 5, dirty_nodes={(0, 1)})
     
     start_node = Node(0, 0)
-    goal_node = Node(3, 3)
+    goal_node = Node(4, 3)
     
     path = a_star_search(start_node, goal_node, grid, penalty_cost=10)
     
     print(f"Path found: {path}")
+    
